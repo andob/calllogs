@@ -1,26 +1,36 @@
 package com.wickerlabs.logmanager;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
 
 import com.wickerlabs.logmanager.interfaces.CallLogObject;
 
 import java.text.DecimalFormat;
 
+import static android.provider.CallLog.Calls.MISSED_TYPE;
+
 public class LogObject implements CallLogObject {
     private String number;
     private long date;
     private int duration, type;
-    private Context context;
+    private String coolDuration;
 
     public LogObject() {
     }
 
-    public LogObject(Context context) {
-        this.context = context;
+    public LogObject(String number, long date, int duration, int type)
+    {
+        this.number=number;
+        this.date=date;
+        this.duration=duration;
+        this.type=type;
+    }
+
+    public LogObject(LogObject another)
+    {
+        this.number=another.number;
+        this.date=another.date;
+        this.duration=another.duration;
+        this.type=another.type;
     }
 
     public String getNumber() {
@@ -55,49 +65,27 @@ public class LogObject implements CallLogObject {
         this.duration = duration;
     }
 
-    public String getCoolDuration() {
-        return getCoolDuration(getDuration());
+    @Override
+    public String getCoolDuration()
+    {
+        if (this.type==MISSED_TYPE)
+            return "";
+        if (this.duration<=0)
+            return "";
+
+        if (coolDuration==null)
+            coolDuration=formatDuration(duration);
+        return coolDuration;
     }
 
-    public String getContactName(){
-        if(getNumber() != null){
-            return findNameByNumber(getNumber());
-        } else {
-            return null;
-        }
-    }
-
-    private String findNameByNumber(final String phoneNumber) {
-        ContentResolver cr = context.getContentResolver();
-
-        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
-
-        Cursor cursor = cr.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME},null, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null);
-        if (cursor == null) {
-            return null;
-        }
-
-        String contactName = null;
-
-        if(cursor.moveToFirst()) {
-            contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
-        }
-
-        if(!cursor.isClosed()) {
-            cursor.close();
-        }
-
-        return (contactName == null) ? phoneNumber : contactName;
-    }
-
-    private String getCoolDuration(float sum) {
+    private static String formatDuration(float value) {
 
         String duration = "";
-        String result;
+        String result = "";
 
-        if (sum >= 0 && sum < 3600) {
+        if (value >= 0 && value < 3600) {
 
-            result = String.valueOf(sum / 60);
+            result = String.valueOf(value / 60);
             String decimal = result.substring(0, result.lastIndexOf("."));
             String point = "0" + result.substring(result.lastIndexOf("."));
 
@@ -105,11 +93,11 @@ public class LogObject implements CallLogObject {
             float seconds = Float.parseFloat(point) * 60;
 
             DecimalFormat formatter = new DecimalFormat("#");
-            duration = minutes + " min " + formatter.format(seconds) + " secs";
+            duration = (minutes + " "+(minutes==1?"min":"mins")+" " + formatter.format(seconds) + " "+(seconds==1?"sec":"secs")).trim();
 
-        } else if (sum >= 3600) {
+        } else if (value >= 3600) {
 
-            result = String.valueOf(sum / 3600);
+            result = String.valueOf(value / 3600);
             String decimal = result.substring(0, result.lastIndexOf("."));
             String point = "0" + result.substring(result.lastIndexOf("."));
 
@@ -117,10 +105,13 @@ public class LogObject implements CallLogObject {
             float minutes = Float.parseFloat(point) * 60;
 
             DecimalFormat formatter = new DecimalFormat("#");
-            duration = hours + " hrs " + formatter.format(minutes) + " min";
+            duration = (hours + " "+(hours==1?"hr":"hrs")+" " + formatter.format(minutes) + " "+(minutes==1?"min":"mins")).trim();
 
         }
 
-        return duration;
+        return duration.replace("0 mins", "")
+                .replace("0 secs", "")
+                .replace("0 hrs", "")
+                .trim();
     }
 }

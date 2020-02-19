@@ -3,13 +3,15 @@ package com.wickerlabs.calls.Adapter;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.RequiresPermission;
+import android.provider.CallLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresPermission;
 
 import com.wickerlabs.calls.R;
 import com.wickerlabs.logmanager.LogObject;
@@ -63,19 +65,19 @@ public class LogsAdapter extends ArrayAdapter<LogObject> {
         Date date1 = new Date(log.getDate());
 
         DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.ERA_FIELD, DateFormat.SHORT);
-        phone.setText(log.getContactName());
+        phone.setText(log.getNumber());
         duration.setText(log.getCoolDuration());
         date.setText(dateFormat.format(date1));
 
         switch (log.getType()) {
 
-            case LogsManager.INCOMING:
+            case CallLog.Calls.INCOMING_TYPE:
                 imageView.setImageResource(R.drawable.received);
                 break;
-            case LogsManager.OUTGOING:
+            case CallLog.Calls.OUTGOING_TYPE:
                 imageView.setImageResource(R.drawable.sent);
                 break;
-            case LogsManager.MISSED:
+            case CallLog.Calls.MISSED_TYPE:
                 imageView.setImageResource(R.drawable.missed);
                 break;
             default:

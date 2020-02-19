@@ -9,6 +9,8 @@
  **************************************************************************************************/
 package com.wickerlabs.logmanager.interfaces;
 
+import android.content.Context;
+
 /**
  * Created by: WickerLabs.Inc
  * Project title: CallLogs
@@ -36,7 +38,4 @@ public interface CallLogObject {
     void setDuration(int duration);
 
     String getCoolDuration();
-
-    String getContactName();
-
 }
