@@ -1,7 +1,6 @@
 
 **Call Logs** - Android library for accessing device call logs
 ================
-[![](https://jitpack.io/v/wickerlabs/CallLogs.svg)](https://jitpack.io/#wickerlabs/CallLogs)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Call%20logs-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/4523)
 
 ![Image of the library in action](https://i.postimg.cc/wj1LPND3/device-2016-10-13-150816.png "screenshot")
@@ -10,20 +9,20 @@
 Installation
 -------------
 
- **Step 1**. Add the JitPack repository to your root build.gradle file.
+ **Step 1**. Add the repository to your root build.gradle file.
  
 
     allprojects {
 		repositories {
 			...
-			maven { url "https://jitpack.io" }
+			maven { url "http://www.andob.info" }
 		}
 	}
 
 **Step 2**. Add the library dependency to your app build.gradle file
 
     dependencies {
-	        implementation 'com.github.wickerlabs:CallLogs:1+@aar'
+	        implementation 'ro.andob.calllogs:calllogs:1.11'
 	}
 
 **Step 3**. Handle permissions (For API 23+)

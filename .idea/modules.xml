@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LogManager.iml" filepath="$PROJECT_DIR$/LogManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Open Source Android Libraries-calllogs.iml" filepath="$PROJECT_DIR$/Open Source Android Libraries-calllogs.iml" group="calllogs" />
+      <module fileurl="file://$PROJECT_DIR$/SampleApp/Open Source Android Libraries-calllogs-SampleApp.iml" filepath="$PROJECT_DIR$/SampleApp/Open Source Android Libraries-calllogs-SampleApp.iml" group="calllogs/SampleApp" />
+      <module fileurl="file://$PROJECT_DIR$/logmanager/Open Source Android Libraries-calllogs-logmanager.iml" filepath="$PROJECT_DIR$/logmanager/Open Source Android Libraries-calllogs-logmanager.iml" group="calllogs/logmanager" />
       <module fileurl="file://$PROJECT_DIR$/SampleApp/SampleApp.iml" filepath="$PROJECT_DIR$/SampleApp/SampleApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/calllogs.iml" filepath="$PROJECT_DIR$/calllogs.iml" />
       <module fileurl="file://$PROJECT_DIR$/SampleApp/calllogs-SampleApp.iml" filepath="$PROJECT_DIR$/SampleApp/calllogs-SampleApp.iml" />
