@@ -20,11 +20,7 @@ android {
     }
 }
 
-repositories {
-    maven { url "http://andob.info" }
-}
-
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'ro.andob.calllogs:calllogs:1.11'
+    implementation project(":logmanager")
 }
